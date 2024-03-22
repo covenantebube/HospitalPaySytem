@@ -1,0 +1,44 @@
+﻿@model PatientDTO
+
+<div class="container">
+    <h2 class="mb-4">Register Patient</h2>
+
+    <form method="post" asp-action="RegisterPatient" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="FirstName" class="form-control" asp-for="FirstName" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="LastName" class="form-control" asp-for="LastName" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="contactNumber">Contact Number:</label>
+            <input type="text" id="contactNumber" name="ContactNumber" class="form-control" asp-for="ContactNumber" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.ContactNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="Email" class="form-control" asp-for="Email" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <!-- Display validation summary -->
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

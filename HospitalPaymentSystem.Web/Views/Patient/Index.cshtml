@@ -1,0 +1,77 @@
+﻿@model PaginatorDTO<IEnumerable<HospitalPaymentSystem.Core.Dtos.PatientDTO>>
+
+<div class="container">
+    <h2>List of Patients</h2>
+
+    <form method="post" asp-action="SearchPatients" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Enter patient ID, first name, or last name" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    @if (Model.PageItems.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Most Recent Payment Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var patient in Model.PageItems)
+                {
+                    <tr>
+                        <td>@patient.PatientID</td>
+                        <td>@(patient.FirstName + " " + patient.LastName)</td>
+                        <td>@patient.ContactNumber</td>
+                        <td>@patient.Email</td>
+                        <td>@(patient.Payments.Any() ? patient.Payments.OrderByDescending(p => p.PaymentDate).First().Amount.ToString("C") : "No payments")</td>
+                        <td>
+                            <a asp-controller="Patient" asp-action="PatientDetails" asp-route-id="@patient.PatientID" class="btn btn-info">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                @if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageNumber=1&pageSize=@Model.PageSize" aria-label="First">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">First</span>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.NumberOfPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="?pageNumber=@i&pageSize=@Model.PageSize">@i</a>
+                    </li>
+                }
+                @if (Model.CurrentPage < Model.NumberOfPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageNumber=@Model.NumberOfPages&pageSize=@Model.PageSize" aria-label="Last">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Last</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+    else
+    {
+        <p>No patients found.</p>
+    }
+</div>

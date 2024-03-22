@@ -1,0 +1,53 @@
+﻿@model PatientDTO
+
+<div class="container">
+    <h2 class="mb-4">Patient Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Patient Information</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="patientID">Patient ID:</label>
+                        <span id="patientID" class="form-control">@Model.PatientID</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <span id="name" class="form-control">@Model.FirstName @Model.LastName</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number:</label>
+                        <span id="contactNumber" class="form-control">@Model.ContactNumber</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <span id="email" class="form-control">@Model.Email</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Payments.Any())
+    {
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4 class="card-title">Payments</h4>
+                <hr />
+                <ul class="list-group">
+                    @foreach (var payment in Model.Payments)
+                    {
+                        <li class="list-group-item">
+                            <span class="font-weight-bold">Amount:</span> @payment.Amount.ToString("C")<br />
+                            <span class="font-weight-bold">Date:</span> @payment.PaymentDate.ToShortDateString()
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+    <a href="@Url.Action("Index", "Patient")" class="btn btn-secondary mt-4">Go Back</a>
+</div>

@@ -1,0 +1,36 @@
+﻿@model PaymentDTO
+
+<div class="container">
+    <h2>Add a Payment</h2>
+
+    <form method="post" asp-action="PostPayment" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="patientID">Patient ID:</label>
+            <input type="number" id="patientID" name="PatientID" class="form-control" asp-for="PatientID" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.PatientID)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="Amount" class="form-control" asp-for="Amount" step="any" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.Amount)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="paymentDate">Payment Date:</label>
+            <input type="date" id="paymentDate" name="PaymentDate" class="form-control" asp-for="PaymentDate" required />
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(model => model.PaymentDate)
+            </div>
+        </div>
+
+        <!-- Display validation summary -->
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <button type="submit" class="btn btn-primary">Submit Payment</button>
+    </form>
+</div>
